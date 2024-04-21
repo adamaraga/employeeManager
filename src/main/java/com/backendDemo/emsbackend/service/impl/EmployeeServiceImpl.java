@@ -1,5 +1,6 @@
 package com.backendDemo.emsbackend.service.impl;
 
+import com.backendDemo.emsbackend.api.SendMail;
 import com.backendDemo.emsbackend.entity.Department;
 import com.backendDemo.emsbackend.mapper.DepartmentMapper;
 import com.backendDemo.emsbackend.repository.DepartmentRepository;
@@ -87,6 +88,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setDepartment(department);
 
         Employee saveEmployee = employeeRepository.save(employee);
+
+        // send  mail to employee
+        SendMail.employeeDepartment(employee, department);
 
         return EmployeeMapper.mapToEmployeeDto(saveEmployee);
     }
