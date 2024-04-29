@@ -18,4 +18,5 @@ public interface DepartmentService {
 
     DepartmentDto assignEmployeeDepartment(Long departmentId, Long employeeId);
 
+
 }

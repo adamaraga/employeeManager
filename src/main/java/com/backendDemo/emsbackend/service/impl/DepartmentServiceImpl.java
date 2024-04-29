@@ -1,7 +1,10 @@
 package com.backendDemo.emsbackend.service.impl;
 
+import com.backendDemo.emsbackend.dto.DepartmentInitDto;
 import com.backendDemo.emsbackend.entity.Employee;
 import com.backendDemo.emsbackend.repository.EmployeeRepository;
+import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import com.backendDemo.emsbackend.dto.DepartmentDto;
 import com.backendDemo.emsbackend.entity.Department;
@@ -21,6 +24,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentRepository departmentRepository;
 
     private EmployeeRepository employeeRepository;
+
+    private final DepartmentInitDto departmentInitDto;
 
     @Override
     public DepartmentDto createDepartment(DepartmentDto departmentDto) {
@@ -84,5 +89,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department savedDepartment = departmentRepository.save(department);
 
         return DepartmentMapper.mapToDepartmentDto(savedDepartment);
+    }
+
+    @PostConstruct
+    @Transactional
+    public void createInitDepartment () {
+        if(departmentRepository.checkIfTableExist() == 0) {
+        Department department = new Department();
+
+        department.setDepartmentDescription(departmentInitDto.disc());
+        department.setDepartmentName(departmentInitDto.name());
+
+        departmentRepository.save(department);
+        }
     }
 }

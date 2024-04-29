@@ -24,6 +24,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private DepartmentRepository departmentRepository;
 
+    private final SendMail SendMail;
+
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
 
